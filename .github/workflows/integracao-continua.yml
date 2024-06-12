@@ -33,3 +33,12 @@ jobs:
 
     - name: Executa testes unitários
       run: mvn -B verify
+    
+    - name: Gera relatório Jacoco
+      run: mvn jacoco:prepare-agent verify
+
+    - name: Análise estática
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn sonar:sonar -Dsonar.projectKey=Gabrielle-Ribeiro_vollmed-api
